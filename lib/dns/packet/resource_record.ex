@@ -10,10 +10,11 @@ defmodule DNS.Packet.ResourceRecord do
     rdlen = String.length(rdata)
 
     <<
-      to_label(record.domain)::binary,
+      0xc0, #pointer
+      0x0c, #where
       to_enum(record.type)::16,
-      0::16,
-      record.ttl::16,
+      1::16, #class IN
+      record.ttl::32,
       rdlen::16,
       rdata::binary
     >>
